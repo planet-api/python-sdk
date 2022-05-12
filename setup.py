@@ -25,6 +25,12 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://planet.joffreybvn.be",
+    project_urls={
+        'Documentation': 'https://planet.joffreybvn.be/python-sdk/index.html',
+        'Source': 'https://github.com/planet-api/python-sdk',
+        'Tracker': 'https://github.com/planet-api/python-sdk/issues',
+        'Community': 'https://discord.gg/SEGApgznjq'
+    },
     author="Joffrey Bienvenu",
     author_email="joffreybvn@gmail.com",
     license="MIT",
