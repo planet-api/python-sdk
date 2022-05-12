@@ -1,6 +1,7 @@
+import json
+import platform as ptf
 import http.client
 from http.client import HTTPResponse
-import json
 from typing import Optional, Dict
 from ..config import config
 from ..protocol import (
@@ -9,38 +10,46 @@ from ..protocol import (
 )
 
 
-def _request(
-        method: str,
-        endpoint: str,
-        auth_token: Optional[str] = None,
-        content: Optional[dict] = None
-) -> HTTPResponse:
-    """Execute a GET or POST request to the API."""
+class _Request:
 
-    # Setup connection
-    connection = http.client.HTTPSConnection(config.api_endpoint)
-    body: Optional[str] = None
-    headers: Dict[str, str] = {}
+    user_agent = f'SDK Python {ptf.python_version()} {ptf.system()} {ptf.release()}'
 
-    # Add authorization header
-    if auth_token:
-        headers['Authorization'] = f"Bearer {auth_token}"
+    @classmethod
+    def execute(
+            cls,
+            method: str,
+            endpoint: str,
+            auth_token: Optional[str] = None,
+            content: Optional[dict] = None
+    ) -> HTTPResponse:
+        """Execute a GET or POST request to the API."""
 
-    # Implement POST specific parameters
-    if method == 'POST' and content:
-        body = json.dumps(content)
-        headers['Content-Type'] = 'application/json'
+        # Setup connection
+        connection = http.client.HTTPSConnection(config.api_endpoint)
+        body: Optional[str] = None
+        headers: Dict[str, str] = {
+            'User-Agent': cls.user_agent
+        }
 
-    # Execute the request and return the response
-    connection.request(method, endpoint, body, headers)
-    return connection.getresponse()
+        # Add authorization header
+        if auth_token:
+            headers['Authorization'] = f"Bearer {auth_token}"
+
+        # Implement POST specific parameters
+        if method == 'POST' and content:
+            body = json.dumps(content)
+            headers['Content-Type'] = 'application/json'
+
+        # Execute the request and return the response
+        connection.request(method, endpoint, body, headers)
+        return connection.getresponse()
 
 
 def _login(api_key: str) -> str:
     """Login to the API and return a token."""
 
     # Send a login request
-    response: HTTPResponse = _request(
+    response: HTTPResponse = _Request.execute(
         method='POST',
         endpoint='/login',
         content={
@@ -57,7 +66,7 @@ def _get_status() -> StatusMessage:
     """Return the status of the API."""
 
     # Send a status request
-    response: HTTPResponse = _request(
+    response: HTTPResponse = _Request.execute(
         method='GET',
         endpoint='/status',
     )
@@ -77,7 +86,7 @@ def _get_planet(auth_token: str) -> PlanetMessage:
     """Return a newly generated planet."""
 
     # Send a planet request
-    response: HTTPResponse = _request(
+    response: HTTPResponse = _Request.execute(
         method='GET',
         endpoint='/planets',
         auth_token=auth_token
