@@ -24,7 +24,7 @@ setup(
     description="Python SDk for Planet API, the 2D planet sprite generator.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://planet.joffreybvn.be/python-sdk",
+    url="https://planet.joffreybvn.be",
     author="Joffrey Bienvenu",
     author_email="joffreybvn@gmail.com",
     license="MIT",
