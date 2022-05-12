@@ -3,9 +3,9 @@ import platform as ptf
 import http.client
 from http.client import HTTPResponse
 from typing import Optional, Dict
-from ..config import config
-from .._version import __version__ as version
-from ..protocol import (
+from .config import config
+from ._version import __version__ as version
+from .protocol import (
     StatusMessage,
     PlanetMessage
 )

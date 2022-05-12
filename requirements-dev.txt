@@ -1,0 +1,16 @@
+# Testing
+pytest
+pytest-cov
+
+# Typings
+MonkeyType
+
+# Documents
+sphinx
+recommonmark
+sphinx_rtd_theme
+sphinx-autodoc-typehints
+
+# Dependencies
+pur
+safety

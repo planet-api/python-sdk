@@ -1,4 +1,4 @@
-from .client.client import Credentials, Client
+from .client import Credentials, Client
 from .config import config
 from .sprite import PlanetSprite
 from .protocol import (
