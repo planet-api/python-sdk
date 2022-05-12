@@ -4,6 +4,7 @@ import http.client
 from http.client import HTTPResponse
 from typing import Optional, Dict
 from ..config import config
+from .._version import __version__ as version
 from ..protocol import (
     StatusMessage,
     PlanetMessage
@@ -12,7 +13,7 @@ from ..protocol import (
 
 class _Request:
 
-    user_agent = f'SDK Python {ptf.python_version()} {ptf.system()} {ptf.release()}'
+    user_agent = f'SDK {version} Python {ptf.python_version()} {ptf.platform()}'
 
     @classmethod
     def execute(
